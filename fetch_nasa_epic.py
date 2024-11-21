@@ -24,7 +24,7 @@ def get_epic_images(api_key, count=1):
     response = requests.get(url, params=params)
     response.raise_for_status()
 
-    images_items = response.json()[:int(count)]
+    images_items = response.json()[:count]
     image_urls = []
 
     for image_data in images_items:
