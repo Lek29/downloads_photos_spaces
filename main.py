@@ -38,6 +38,9 @@ def main():
     parser.add_argument('--epic_count', type=int, default=1, nargs='?', help='Количество фотографий EPIC для скачивания')
     args = parser.parse_args()
 
+    images_directory = 'images'
+    os.makedirs(images_directory, exist_ok=True)
+
     if args.spacex:
         # Скачивание фотографий с запуска SpaceX
         if args.spacex_launch_id:
@@ -46,20 +49,19 @@ def main():
             links_photos = fetch_spacex_launch()
 
         if links_photos:
-            download_images(links_photos, 'images', prefix='spacex')
+            download_images(links_photos, os.path.join(images_directory, 'spacex'), prefix='spacex')
         else:
             print("Фотографии не найдены для данного запуска SpaceX.")
 
     if args.apod:
         # Скачивание фотографий с Astronomy Picture of the Day (APOD) от NASA
         image_urls = get_nasa_apod(api_key_nasa, args.apod_count)
-        download_images(image_urls, 'nasa_apod_directory', prefix='apod')
+        download_images(image_urls,  os.path.join(images_directory, 'nasa_apod_directory'), prefix='apod')
 
     if args.epic:
         # Скачивание фотографий с EPIC API от NASA
         epic_image_urls = get_epic_images(api_key_nasa, args.epic_count)
-        download_images(epic_image_urls, 'nasa_epic_directory', prefix='epic')
-
+        download_images(epic_image_urls, os.path.join(images_directory, 'nasa_epic_directory'), prefix='epic')
 
 
 if __name__ == '__main__':
