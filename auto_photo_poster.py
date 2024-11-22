@@ -72,3 +72,6 @@ def main():
     bot = Bot(token=token_tg_bot)
     photo_list = get_photo_list(photos_directory)
     publish_photo(bot, channel_id, photo_list, publication_interval)
+
+if __name__ == '__main__':
+    main()
