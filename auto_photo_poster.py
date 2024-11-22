@@ -6,18 +6,25 @@ from telegram import Bot
 
 SECONDS_IN_HOUR = 3600
 
-channel_id = os.getenv('CHANNEL_ID')
-token_tg_bot = os.getenv('TOKEN_TG_BOT')
-photos_directory = os.getenv('PHOTOS_DIRECTORY')
-publication_interval = int(os.getenv('PUBLICATION_INTRVAL', 4)) * SECONDS_IN_HOUR
+def load_environment_variables():
+    """
+    Загружает переменные окружения из файла .env.
+    """
+    load_dotenv()
+    channel_id = os.getenv('CHANNEL_ID')
+    token_tg_bot = os.getenv('TOKEN_TG_BOT')
+    photos_directory = os.getenv('PHOTOS_DIRECTORY')
+    publication_interval = int(os.getenv('PUBLICATION_INTRVAL', 4)) * SECONDS_IN_HOUR
 
+    if not token_tg_bot:
+        raise ValueError("TELEGRAM_BOT_TOKEN не установлен в переменных окружения")
+    if not channel_id:
+        raise ValueError("TELEGRAM_CHAT_ID не установлен в переменных окружения")
+    if not photos_directory:
+        raise ValueError("PHOTOS_DIRECTORY не установлен в переменных окружения")
 
-if not token_tg_bot:
-    raise ValueError("TELEGRAM_BOT_TOKEN не установлен в переменных окружения")
-if not channel_id:
-    raise ValueError("TELEGRAM_CHAT_ID не установлен в переменных окружения")
-if not photos_directory:
-    raise ValueError("PHOTOS_DIRECTORY не установлен в переменных окружения")
+    return channel_id, token_tg_bot, photos_directory, publication_interval
+
 
 
 def get_photo_list(directory):
@@ -57,16 +64,11 @@ def publish_photo(bot, chat_id, photo_list):
                 bot.send_photo(chat_id=chat_id, photo=file)
             time.sleep(publication_interval)
 
-
-def start_publish():
+def main():
     """
-    Запускает процесс публикации фотографий
+    Основная функция для запуска процесса публикации фотографий.
     """
+    channel_id, token_tg_bot, photos_directory, publication_interval = load_environment_variables()
     bot = Bot(token=token_tg_bot)
     photo_list = get_photo_list(photos_directory)
-    publish_photo(bot, channel_id, photo_list)
-
-
-if __name__ == '__main__':
-    start_publish()
-    
+    publish_photo(bot, channel_id, photo_list, publication_interval)
