@@ -47,7 +47,7 @@ def get_photos(directory):
     return photos
 
 
-def publish_photo(bot, chat_id, photo_list):
+def publish_photos(bot, chat_id, photo_list):
     """
     Публикует фотографии в Telegram-канал с заданной периодичностью.
 
@@ -70,8 +70,8 @@ def main():
     """
     channel_id, token_tg_bot, photos_directory, publication_interval = load_environment_variables()
     bot = Bot(token=token_tg_bot)
-    photo_list = get_photos(photos_directory)
-    publish_photo(bot, channel_id, photo_list, publication_interval)
+    photos = get_photos(photos_directory)
+    publish_photos(bot, channel_id, photos, publication_interval)
 
 if __name__ == '__main__':
     main()
