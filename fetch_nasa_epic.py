@@ -24,12 +24,12 @@ def get_epic_images(api_key, count=1):
     response = requests.get(url, params=params)
     response.raise_for_status()
 
-    images_items = response.json()[:int(count)]
+    images_metadata = response.json()[:count]
     image_urls = []
 
-    for image_data in images_items:
-        image_name = image_data['image']
-        date_str = image_data['date']
+    for image_details in images_metadata:
+        image_name = image_details['image']
+        date_str = image_details['date']
         date_obj = datetime.fromisoformat(date_str)
         date_formatted = date_obj.strftime('%Y/%m/%d')
 

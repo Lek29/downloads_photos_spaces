@@ -40,8 +40,3 @@ def fetch_spacex_launch(launch_id=None):
 
     links_photos = launch_items.get('links', {}).get('flickr', {}).get('original', [])
     return links_photos
-
-    # for number_foto, link in enumerate(links_photos, start=1):
-    #     save_path = os.path.join(r'C:\pythonProject\pythonProject\Download_photo\images', '')
-    #
-    #     yield link, save_path
