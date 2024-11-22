@@ -27,7 +27,7 @@ def load_environment_variables():
 
 
 
-def get_photo_list(directory):
+def get_photos(directory):
     """
     Получает список всех фотографий в заданной директории и её поддиректориях.
 
@@ -37,14 +37,14 @@ def get_photo_list(directory):
     Returns:
         list: Список путей к фотографиям.
     """
-    photo_list = []
+    photos = []
     for root, dirs, files in os.walk(directory):
         print(f'this root:{root}, this files:{files}')
         for file in files:
             if file.lower().endswith(('.jpg', '.jpeg', 'bmp', 'png')):
-                photo_list.append(os.path.join(root, file))
+                photos.append(os.path.join(root, file))
 
-    return photo_list
+    return photos
 
 
 def publish_photo(bot, chat_id, photo_list):
@@ -70,7 +70,7 @@ def main():
     """
     channel_id, token_tg_bot, photos_directory, publication_interval = load_environment_variables()
     bot = Bot(token=token_tg_bot)
-    photo_list = get_photo_list(photos_directory)
+    photo_list = get_photos(photos_directory)
     publish_photo(bot, channel_id, photo_list, publication_interval)
 
 if __name__ == '__main__':
