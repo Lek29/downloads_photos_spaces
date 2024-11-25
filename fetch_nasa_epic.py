@@ -24,10 +24,10 @@ def get_epic_images(api_key, count=1):
     response = requests.get(url, params=params)
     response.raise_for_status()
 
-    images_metadata = response.json()[:count]
+    images = response.json()[:count]
     image_urls = []
 
-    for image_details in images_metadata:
+    for image_details in images:
         image_name = image_details['image']
         date_str = image_details['date']
         date_obj = datetime.fromisoformat(date_str)
