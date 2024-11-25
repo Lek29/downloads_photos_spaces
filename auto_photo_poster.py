@@ -39,7 +39,6 @@ def get_photos(directory):
     """
     photos = []
     for root, dirs, files in os.walk(directory):
-        print(f'this root:{root}, this files:{files}')
         for file in files:
             if file.lower().endswith(('.jpg', '.jpeg', 'bmp', 'png')):
                 photos.append(os.path.join(root, file))
@@ -47,7 +46,7 @@ def get_photos(directory):
     return photos
 
 
-def publish_photos(bot, chat_id, photo_list):
+def publish_photos(bot, chat_id, photo_list, publication_interval):
     """
     Публикует фотографии в Telegram-канал с заданной периодичностью.
 
