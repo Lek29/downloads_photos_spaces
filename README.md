@@ -57,7 +57,7 @@ python main.py
 ### Публикация фотографий в Telegram
 1. Запустите скрипт для публикации фотографий в Telegram:
 ```pyhton
-python publish_photos.py
+auto_photo_poster.py
 ```
 2. Скрипт выполнит следующие действия:
 
